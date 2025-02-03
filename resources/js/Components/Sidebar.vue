@@ -1,6 +1,6 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import { Link } from '@inertiajs/vue3'
 
 defineProps({
@@ -11,6 +11,16 @@ const page = usePage();
 
 // const userPermissions = computed(() => page.props.auth.user.permissions);
 // const userRole = computed(() => page.props.auth.user.roles[0].name);
+
+onMounted( () => {
+    $('[data-widget = "treeview"]').Treeview('init');
+})
+
+onUnmounted(() => {
+    $(document).on('click','[data-widget="treeview"] .nav-link', function (e) {
+        e.stopImmediatePropagation();
+    });
+})
 
 </script>
 
@@ -66,6 +76,27 @@ const page = usePage();
               <span>Calendar</span>
               <span class="badge badge-info right">2</span>
             </a>
+          </li>
+          <li class="nav-item not-link">
+            <a href="#" class="nav-link text-sm">
+              <i class="nav-icon fas fa-search"></i>
+              <span>Search</span>
+              <i class="fas fa-angle-left right"></i>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item active">
+                <a href="pages/search/simple.html" class="nav-link link text-sm">
+                  <i class="far fa-circle nav-icon"></i>
+                  <span>Simple Search</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/search/enhanced.html" class="nav-link link text-sm">
+                  <i class="far fa-circle nav-icon"></i>
+                  <span>Enhanced</span>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item not-link">
             <a href="#" class="nav-link text-sm">
